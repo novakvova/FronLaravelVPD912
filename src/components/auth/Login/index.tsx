@@ -2,14 +2,18 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { ILoginModel } from "./types";
 import { LoginSchema } from "./validation";
 import {InputGroup} from '../../common/InputGroup';
+import { useActions } from '../../../hooks/useActions';
 
 const LoginPage = () => {
+
+  const { LoginUser } = useActions();
   const initialValues: ILoginModel = {
     email: "",
     password: "",
   };
   const onHandleSubmit = (values: ILoginModel) => {
     console.log("Server Send data: ", values);
+    LoginUser(values);
   };
 
   const formik = useFormik({

@@ -1,5 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+
 const Header = () => {
+  const { user, isAuth } = useTypedSelector((redux) => redux.auth);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -18,13 +23,28 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Вхід
-              </Link>
-            </li>
-          </ul>
+          {isAuth ? (
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link" to="/profile">
+                  {user?.email}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/logout">
+                  Вихід
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Вхід
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
